@@ -1,7 +1,7 @@
 package freetime.porkyapi.service;
 
 import freetime.porkyapi.model.HousingEntity;
-import freetime.porkyapi.repository.HousingRepository;
+import freetime.porkyapi.farm.repository.HousingRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

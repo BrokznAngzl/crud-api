@@ -1,4 +1,4 @@
-package freetime.porkyapi.model;
+package freetime.porkyapi.farm.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

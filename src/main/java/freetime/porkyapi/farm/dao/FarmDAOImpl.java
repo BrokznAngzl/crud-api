@@ -1,6 +1,6 @@
-package freetime.porkyapi.controller.farm.dao;
+package freetime.porkyapi.farm.dao;
 
-import freetime.porkyapi.model.FarmEntity;
+import freetime.porkyapi.farm.model.FarmEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

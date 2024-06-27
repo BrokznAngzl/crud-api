@@ -1,7 +1,7 @@
-package freetime.porkyapi.service;
+package freetime.porkyapi.farm.service;
 
-import freetime.porkyapi.model.FarmEntity;
-import freetime.porkyapi.repository.FarmRepository;
+import freetime.porkyapi.farm.model.FarmEntity;
+import freetime.porkyapi.farm.repository.FarmRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

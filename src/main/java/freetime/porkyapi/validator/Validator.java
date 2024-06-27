@@ -1,6 +1,6 @@
 package freetime.porkyapi.validator;
 
-import freetime.porkyapi.model.FarmEntity;
+import freetime.porkyapi.farm.model.FarmEntity;
 
 import java.math.BigInteger;
 

@@ -1,8 +1,8 @@
-package freetime.porkyapi.controller.farm;
+package freetime.porkyapi.farm.controller;
 
-import freetime.porkyapi.controller.farm.dao.FarmDAO;
-import freetime.porkyapi.model.FarmEntity;
-import freetime.porkyapi.service.FarmService;
+import freetime.porkyapi.farm.dao.FarmDAO;
+import freetime.porkyapi.farm.model.FarmEntity;
+import freetime.porkyapi.farm.service.FarmService;
 import freetime.porkyapi.validator.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package freetime.porkyapi.repository;
+package freetime.porkyapi.farm.repository;
 
 import freetime.porkyapi.model.EmployeeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
