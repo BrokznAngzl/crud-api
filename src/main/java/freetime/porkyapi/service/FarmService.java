@@ -55,7 +55,7 @@ public class FarmService {
         try {
             farmRepo.deleteById(id);
             log.info("deleteFarm id{} successfully.", id);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
