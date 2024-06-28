@@ -1,6 +1,6 @@
-package freetime.porkyapi.farm.repository;
+package freetime.porkyapi.housing.repository;
 
-import freetime.porkyapi.model.HousingEntity;
+import freetime.porkyapi.housing.model.HousingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigInteger;
