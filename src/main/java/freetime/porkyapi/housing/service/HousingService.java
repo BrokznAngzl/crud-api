@@ -1,5 +1,6 @@
 package freetime.porkyapi.housing.service;
 
+import freetime.porkyapi.housing.dao.HousingDAO;
 import freetime.porkyapi.housing.model.HousingEntity;
 import freetime.porkyapi.housing.repository.HousingRepository;
 import lombok.extern.log4j.Log4j2;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Optional;
 
 @Log4j2
@@ -17,6 +17,8 @@ import java.util.Optional;
 public class HousingService {
     @Autowired
     private HousingRepository housingRepo;
+    @Autowired
+    private HousingDAO housingDAO;
 
     public ResponseEntity<?> saveHousing(HousingEntity housing) {
         try {
@@ -31,9 +33,8 @@ public class HousingService {
 
     public ResponseEntity<?> getAllHousing() {
         try {
-            List<HousingEntity> result = housingRepo.findAll();
             log.info("get all housing successfully.");
-            return ResponseEntity.ok(result);
+            return ResponseEntity.ok(housingDAO.getHousingWithFarmName());
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
