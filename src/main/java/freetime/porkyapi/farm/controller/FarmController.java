@@ -33,7 +33,7 @@ public class FarmController {
         }
 
         log.info("Creating farm {}", farm);
-        return farmService.saveFarm(farm);
+        return farmService.saveFarm(farm, false);
     }
 
     @PutMapping
@@ -44,7 +44,7 @@ public class FarmController {
         }
 
         log.info("Updating farm {}", farm);
-        return farmService.saveFarm(farm);
+        return farmService.saveFarm(farm, true);
     }
 
     @DeleteMapping
@@ -96,5 +96,18 @@ public class FarmController {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("/farmname")
+    public ResponseEntity<?> getFarmByName(@RequestParam String name) {
+        try {
+            log.info("find {} in farm table", name);
+            return farmService.findFarmByName(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
     }
 }

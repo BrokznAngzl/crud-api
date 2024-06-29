@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface HousingDAO {
     public List<?> getHousingWithFarmName();
+    public List<?> getHousingWithFarmName(HousingEntity housing);
 }

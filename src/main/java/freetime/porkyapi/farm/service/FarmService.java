@@ -18,11 +18,11 @@ public class FarmService {
     @Autowired
     private FarmRepository farmRepo;
 
-    public ResponseEntity<?> saveFarm(FarmEntity farm) {
+    public ResponseEntity<?> saveFarm(FarmEntity farm, Boolean isEdit) {
         try {
             farmRepo.save(farm);
             log.info("save {} successfully.", farm);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return isEdit? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -73,3 +73,4 @@ public class FarmService {
         }
     }
 }
+
