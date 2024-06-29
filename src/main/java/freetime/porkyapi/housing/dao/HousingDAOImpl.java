@@ -28,28 +28,24 @@ public class HousingDAOImpl implements HousingDAO {
 
     @Override
     public List<HousingResponseModel> getHousingWithFarmName(HousingEntity housing) {
-        boolean gotWhere = false;
         StringBuilder sql = new StringBuilder(
                 "SELECT h.housingid, h.housingname, h.stallquanity, f.farmname \n" +
                         "FROM housing h \n" +
-                        "LEFT JOIN farm f ON h.farmid = f.farmid \n");
+                        "LEFT JOIN farm f ON h.farmid = f.farmid \n" +
+                        "WHERE 1=1 \n");
 
         List<Object> params = new ArrayList<>();
         if (housing != null) {
             if (housing.getHousingName() != null && !housing.getHousingName().isEmpty()) {
-                sql.append(" WHERE LOWER(housingname) LIKE LOWER(?)");
+                sql.append("AND LOWER(housingname) LIKE LOWER(?) \n");
                 params.add(SQLAssistant.likeAll(housing.getHousingName()));
-                gotWhere = true;
             }
-            //    int type
             if (housing.getStallQuanity() != null) {
-                sql.append( gotWhere? " AND h.stallquanity = ?" : " WHERE h.stallquanity = ?");
+                sql.append("AND h.stallquanity = ? \n");
                 params.add(housing.getStallQuanity());
-                gotWhere = true;
             }
-            //    bigint type
             if (housing.getFarmID() != null) {
-                sql.append( gotWhere? " AND f.farmid = ?" : " WHERE f.farmid = ?");
+                sql.append("AND f.farmid = ? \n");
                 params.add(housing.getFarmID());
             }
         }
