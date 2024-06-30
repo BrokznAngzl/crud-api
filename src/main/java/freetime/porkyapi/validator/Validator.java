@@ -1,5 +1,6 @@
 package freetime.porkyapi.validator;
 
+import freetime.porkyapi.breeds.model.BreedsEntity;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.farm.model.FarmEntity;
 import freetime.porkyapi.housing.model.HousingEntity;
@@ -25,5 +26,9 @@ public class Validator {
 
     public static Boolean validateCustomer(CustomerEntity customer) {
         return customer != null;
+    }
+
+    public static Boolean validateBreeds(BreedsEntity breeds) {
+        return breeds != null;
     }
 }
