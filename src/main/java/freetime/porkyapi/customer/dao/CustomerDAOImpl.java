@@ -17,7 +17,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<CustomerEntity> findCustomer(CustomerEntity customer) {
+    public List<?> findCustomer(CustomerEntity customer) {
         StringBuilder sql = new StringBuilder(
                         "SELECT * \n" +
                         "FROM customer \n" +
@@ -29,13 +29,13 @@ public class CustomerDAOImpl implements CustomerDAO {
                 sql.append("AND LOWER(customername) LIKE LOWER(?) \n");
                 params.add(SQLAssistant.likeAll(customer.getCustomerName()));
             }
-            if (customer.getEmail() != null) {
+            if (customer.getEmail() != null && !customer.getEmail().isEmpty()) {
                 sql.append("AND LOWER(email) LIKE LOWER(?) \n");
-                params.add(customer.getEmail());
+                params.add(SQLAssistant.likeAll(customer.getEmail()));
             }
-            if (customer.getPhone() != null) {
+            if (customer.getPhone() != null && !customer.getPhone().isEmpty()) {
                 sql.append(" AND LOWER(phone) LIKE LOWER(?) \n");
-                params.add(customer.getPhone());
+                params.add(SQLAssistant.likeAll(customer.getPhone()));
             }
         }
 

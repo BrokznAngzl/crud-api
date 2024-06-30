@@ -1,7 +1,5 @@
 package freetime.porkyapi.customer.controller;
 
-import freetime.porkyapi.customer.model.CustomerEntity;
-import freetime.porkyapi.customer.service.CustomerService;
 import freetime.porkyapi.customer.dao.CustomerDAO;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.customer.service.CustomerService;
@@ -12,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @CrossOrigin("${cors.allowed.origin}")
@@ -23,6 +20,8 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+    @Autowired
+    private CustomerDAO customerDAO;
 
     @PostMapping
     public ResponseEntity<?> createCustomer(@RequestBody CustomerEntity customer) {
@@ -56,7 +55,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllCustomers() {
+    public ResponseEntity<?> getAllCustomer() {
         try {
             log.info("Retrieving all customers");
             return customerService.getAllCustomer();
@@ -67,18 +66,18 @@ public class CustomerController {
         }
     }
 
-//    @PostMapping("/find")
-//    public ResponseEntity<?> findCustomer(@RequestBody CustomerEntity customer) {
-//        try {
-//            log.info("find customer {}", customer);
-//            List<CustomerEntity> queryResult = customerDAO.findCustomer(customer);
-//            return ResponseEntity.ok(queryResult);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    @PostMapping("/find")
+    public ResponseEntity<?> findCustomer(@RequestBody CustomerEntity customer) {
+        try {
+            log.info("find customer {}", customer);
+            List<?> queryResult = customerDAO.findCustomer(customer);
+            return ResponseEntity.ok(queryResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @GetMapping("/customername")
     public ResponseEntity<?> getCustomerByName(@RequestParam String name) {
