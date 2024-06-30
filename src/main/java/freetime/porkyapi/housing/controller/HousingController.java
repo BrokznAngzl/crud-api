@@ -89,18 +89,4 @@ public class HousingController {
         }
 
     }
-
-
-//    @PostMapping("/find")
-//    public ResponseEntity<?> findhousing(@RequestBody HousingEntity housing) {
-//        try {
-//            log.info("find housing {}", housing);
-//            List<HousingEntity> queryResult = housingDAO.findhousing(housing);
-//            return ResponseEntity.ok(queryResult);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
 }

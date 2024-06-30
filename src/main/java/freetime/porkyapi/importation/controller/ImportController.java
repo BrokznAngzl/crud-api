@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("${cors.allowed.origin}")
 @Log4j2
-@RequestMapping("/porkyapi/Importation")
+@RequestMapping("/porkyapi/import")
 @RestController
 public class ImportController {
 
     @Autowired
     private ImportService importService;
-//    @Autowired
-//    private ImportDAO ImportationDAO;
-
 
     @PostMapping
     public ResponseEntity<?> createImport(@RequestBody ImportEntity Importation) {
@@ -52,27 +49,27 @@ public class ImportController {
         return importService.deleteImport(Importation.getImportID());
     }
 
-//    @GetMapping
-//    public ResponseEntity<?> getAllImports() {
-//        try {
-//            log.info("Retrieving all Importations");
-//            return importService.f(null);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    @GetMapping
+    public ResponseEntity<?> getAllImports() {
+        try {
+            log.info("Retrieving all Importations");
+            return importService.getAllImport(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
-//    @PostMapping("/find")
-//    public ResponseEntity<?> findImport(@RequestBody ImportEntity Importation) {
-//        try {
-//            log.info("Retrieving all Importations");
-//            return importService.getAllImport(Importation);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    @PostMapping("/find")
+    public ResponseEntity<?> findImport(@RequestBody ImportEntity Importation) {
+        try {
+            log.info("Retrieving all Importations");
+            return importService.getAllImport(Importation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

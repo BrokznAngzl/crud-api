@@ -17,13 +17,13 @@ public class ImportEntity {
     private BigInteger importID;
 
     @Column(name = "date")
-    private Date date;
+    private String date;
     @Column(name = "quanity")
     private BigDecimal quanity;
     @Column(name = "avgweight")
     private BigDecimal avgWeight;
     @Column(name = "breeds")
-    private int breeds;
+    private BigInteger breeds;
     @Column(name = "housingid")
     private BigInteger housingID;
 }

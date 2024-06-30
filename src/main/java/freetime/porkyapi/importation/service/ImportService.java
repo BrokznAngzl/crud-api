@@ -1,6 +1,7 @@
 package freetime.porkyapi.importation.service;
 
 
+import freetime.porkyapi.importation.dao.ImportDAO;
 import freetime.porkyapi.importation.model.ImportEntity;
 import freetime.porkyapi.importation.repository.ImportRepository;
 import lombok.extern.log4j.Log4j2;
@@ -19,8 +20,8 @@ import java.util.Optional;
 public class ImportService {
     @Autowired
     private ImportRepository importRepo;
-//    @Autowired
-//    private ImportDAO importDAO;
+    @Autowired
+    private ImportDAO importDAO;
 
     public ResponseEntity<?> saveImport(ImportEntity importation, Boolean isEdit) {
         try {
@@ -33,17 +34,17 @@ public class ImportService {
         }
     }
 
-//    public ResponseEntity<?> getAllImport(ImportEntity importation) {
-//        try {
-//            List<?> result = new ArrayList<>();
-//            result = (importation != null) ? importDAO.getImportWithFarmName(import) : importDAO.getImportWithFarmName();
-//            log.info("get all import successfully.");
-//            return ResponseEntity.ok(result);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    public ResponseEntity<?> getAllImport(ImportEntity importation) {
+        try {
+            List<?> result = new ArrayList<>();
+            result = (importation != null) ? importDAO.getImportWithHousingName(importation) : importDAO.getImportWithHousingName();
+            log.info("get all import successfully.");
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     public ResponseEntity<?> getImportById(BigInteger id) {
         try {
