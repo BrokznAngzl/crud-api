@@ -4,6 +4,7 @@ import freetime.porkyapi.breeds.model.BreedsEntity;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.farm.model.FarmEntity;
 import freetime.porkyapi.housing.model.HousingEntity;
+import freetime.porkyapi.importation.model.ImportEntity;
 
 import java.math.BigInteger;
 
@@ -30,5 +31,9 @@ public class Validator {
 
     public static Boolean validateBreeds(BreedsEntity breeds) {
         return breeds != null;
+    }
+
+    public static Boolean validateImport(ImportEntity importation) {
+        return importation != null;
     }
 }

@@ -1,5 +1,6 @@
 package freetime.porkyapi.breeds.controller;
 
+import freetime.porkyapi.breeds.dao.BreedsDAO;
 import freetime.porkyapi.breeds.model.BreedsEntity;
 import freetime.porkyapi.breeds.service.BreedsService;
 import freetime.porkyapi.validator.Validator;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("${cors.allowed.origin}")
 @Log4j2
 @RequestMapping("/porkyapi/breeds")
@@ -17,6 +20,8 @@ public class BreedsController {
 
     @Autowired
     private BreedsService breedsService;
+    @Autowired
+    private BreedsDAO breedsDAO;
 
     @PostMapping
     public ResponseEntity<?> createBreeds(@RequestBody BreedsEntity breeds) {
@@ -52,7 +57,7 @@ public class BreedsController {
     @GetMapping
     public ResponseEntity<?> getAllBreeds() {
         try {
-            log.info("Retrieving all breedss");
+            log.info("Retrieving all breeds");
             return breedsService.getAllBreeds();
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,6 +76,18 @@ public class BreedsController {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
 
+    @PostMapping("/find")
+    public ResponseEntity<?> findFarm(@RequestBody BreedsEntity breeds) {
+        try {
+            log.info("find breeds {}", breeds);
+            List<?> queryResult = breedsDAO.findBreeds(breeds);
+            return ResponseEntity.ok(queryResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

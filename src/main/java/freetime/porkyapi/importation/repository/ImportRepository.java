@@ -1,6 +1,6 @@
-package freetime.porkyapi.importion.repository;
+package freetime.porkyapi.importation.repository;
 
-import freetime.porkyapi.importion.model.ImportEntity;
+import freetime.porkyapi.importation.model.ImportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigInteger;
