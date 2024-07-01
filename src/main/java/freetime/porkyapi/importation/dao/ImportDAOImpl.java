@@ -1,7 +1,6 @@
 package freetime.porkyapi.importation.dao;
 
-import freetime.porkyapi.consts.SQLAssistant;
-import freetime.porkyapi.importation.model.ImportEntity;
+import freetime.porkyapi.importation.model.ImportRequestModel;
 import freetime.porkyapi.importation.model.ImportResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -29,20 +28,48 @@ public class ImportDAOImpl implements ImportDAO {
     }
 
     @Override
-    public List<?> getImportWithHousingName(ImportEntity importation) {
+    public List<?> getImportWithHousingName(ImportRequestModel importation) {
         StringBuilder sql = new StringBuilder(
-                "SELECT h.housingid, h.housingname, h.stallquanity, f.farmname \n" +
-                        "FROM housing h \n" +
-                        "LEFT JOIN farm f ON h.farmid = f.farmid \n" +
-                        "WHERE 1=1 \n");
+                "SELECT i.importid, i.date, i.avgweight, i.quanity, b.breedsname, h.housingname\n" +
+                        "FROM import i\n" +
+                        "         LEFT JOIN housing h ON i.housingid = h.housingid\n" +
+                        "         LEFT JOIN breeds b ON i.breeds = b.breedsid\n" +
+                        "WHERE 1 = 1\n"
+        );
 
         List<Object> params = new ArrayList<>();
         if (importation != null) {
-            if (importation.getDate() != null && !importation.getDate().isEmpty()) {
-//                pls check date
-                sql.append("AND LOWER(housingname) LIKE LOWER(?) \n");
-                params.add(SQLAssistant.likeAll(importation.getDate()));
+            if ((importation.getStartDate() != null && !importation.getStartDate().isEmpty()) &&
+                    (importation.getEndDate() != null && !importation.getEndDate().isEmpty())) {
+                sql.append("AND i.date BETWEEN ? AND ? \n");
+                params.add(importation.getStartDate());
+                params.add(importation.getEndDate());
+            } else if (importation.getStartDate() != null && !importation.getStartDate().isEmpty()) {
+                sql.append("AND i.date >= ? \n");
+                params.add(importation.getStartDate());
+            } else if (importation.getEndDate() != null && !importation.getEndDate().isEmpty()) {
+                sql.append("AND i.date <= ? \n");
+                params.add(importation.getEndDate());
             }
+
+            if (importation.getBreedsID() != null) {
+                sql.append("AND i.breeds = ? \n");
+                params.add(importation.getBreedsID());
+            }
+            if (importation.getHousingID() != null) {
+                sql.append("AND i.housingid = ? \n");
+                params.add(importation.getHousingID());
+            }
+            if (importation.getAvgWeight() != null) {
+                sql.append("AND i.avgweight = ? \n");
+                params.add(importation.getAvgWeight());
+            }
+            if (importation.getQuanity() != null) {
+                sql.append("AND i.quanity = ? \n");
+                params.add(importation.getQuanity());
+            }
+
+
         }
 
         return jdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<>(ImportResponseModel.class));

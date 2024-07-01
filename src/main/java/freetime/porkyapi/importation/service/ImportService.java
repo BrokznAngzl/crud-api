@@ -3,6 +3,7 @@ package freetime.porkyapi.importation.service;
 
 import freetime.porkyapi.importation.dao.ImportDAO;
 import freetime.porkyapi.importation.model.ImportEntity;
+import freetime.porkyapi.importation.model.ImportRequestModel;
 import freetime.porkyapi.importation.repository.ImportRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ImportService {
         }
     }
 
-    public ResponseEntity<?> getAllImport(ImportEntity importation) {
+    public ResponseEntity<?> getAllImport(ImportRequestModel importation) {
         try {
             List<?> result = new ArrayList<>();
             result = (importation != null) ? importDAO.getImportWithHousingName(importation) : importDAO.getImportWithHousingName();

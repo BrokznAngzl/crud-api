@@ -1,6 +1,7 @@
 package freetime.porkyapi.importation.controller;
 
 import freetime.porkyapi.importation.model.ImportEntity;
+import freetime.porkyapi.importation.model.ImportRequestModel;
 import freetime.porkyapi.importation.service.ImportService;
 import freetime.porkyapi.validator.Validator;
 import lombok.extern.log4j.Log4j2;
@@ -62,7 +63,7 @@ public class ImportController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<?> findImport(@RequestBody ImportEntity Importation) {
+    public ResponseEntity<?> findImport(@RequestBody ImportRequestModel Importation) {
         try {
             log.info("Retrieving all Importations");
             return importService.getAllImport(Importation);
