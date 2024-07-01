@@ -18,8 +18,6 @@ public class HousingController {
 
     @Autowired
     private HousingService housingService;
-    @Autowired
-    private HousingDAO housingDAO;
 
 
     @PostMapping

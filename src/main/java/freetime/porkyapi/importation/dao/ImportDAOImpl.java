@@ -68,8 +68,6 @@ public class ImportDAOImpl implements ImportDAO {
                 sql.append("AND i.quanity = ? \n");
                 params.add(importation.getQuanity());
             }
-
-
         }
 
         return jdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<>(ImportResponseModel.class));
