@@ -2,7 +2,6 @@ package freetime.porkyapi.casedetail.dao;
 
 import freetime.porkyapi.casedetail.model.CaseDetailEntity;
 import freetime.porkyapi.consts.SQLAssistant;
-import freetime.porkyapi.housing.model.HousingResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,15 +21,15 @@ public class CaseDetailDAOImpl implements CaseDetailDAO {
         StringBuilder sql = new StringBuilder(
                 "SELECT c.causeid, c.cause \n" +
                         "FROM casecause c \n" +
-                        "WHERE 1=1;");
+                        "WHERE 1=1 \n");
 
         List<Object> params = new ArrayList<>();
         if (caseDetail != null) {
             if (caseDetail.getCause() != null && !caseDetail.getCause().isEmpty()) {
-                sql.append("AND LOWER(cause) LIKE LOWER(?) \n");
+                sql.append("AND LOWER(c.cause) LIKE LOWER(?) \n");
                 params.add(SQLAssistant.likeAll(caseDetail.getCause()));
             }
         }
-        return jdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<>(HousingResponseModel.class));
+        return jdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<>(CaseDetailEntity.class));
     }
 }
