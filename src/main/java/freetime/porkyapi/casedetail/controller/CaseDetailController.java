@@ -79,7 +79,7 @@ public class CaseDetailController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<?> findFarm(@RequestBody CaseDetailEntity caseDetail) {
+    public ResponseEntity<?> findCase(@RequestBody CaseDetailEntity caseDetail) {
         try {
             log.info("find case {}", caseDetail);
             List<?> queryResult = caseDAO.getCaseDetailWhere(caseDetail);

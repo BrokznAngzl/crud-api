@@ -9,6 +9,7 @@ import freetime.porkyapi.importation.model.ImportEntity;
 import freetime.porkyapi.importation.model.ImportRequestModel;
 import freetime.porkyapi.util.DateUtil;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -45,7 +46,9 @@ public class Validator {
     public static Boolean validateImport(ImportEntity importation, String controller) {
         if (importation != null) {
 
-            if (controller.equals("create") || controller.equals("update")) {
+            if ( (controller.equals("create") || controller.equals("update")) &&
+                    (!(importation.getQuanity().compareTo(BigDecimal.ZERO) < 0) &&
+                            !(importation.getAvgWeight().compareTo(BigDecimal.ZERO) < 0)) ){
                 return !DateUtil.afterToday(importation.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
             }
         }
