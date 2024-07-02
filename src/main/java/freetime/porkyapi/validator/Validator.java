@@ -1,6 +1,7 @@
 package freetime.porkyapi.validator;
 
 import freetime.porkyapi.breeds.model.BreedsEntity;
+import freetime.porkyapi.casedetail.model.CaseDetailEntity;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.farm.model.FarmEntity;
 import freetime.porkyapi.housing.model.HousingEntity;
@@ -27,6 +28,10 @@ public class Validator {
 
     public static Boolean validateHousing(HousingEntity housing) {
         return housing != null;
+    }
+
+    public static Boolean validateCase(CaseDetailEntity caseDetail) {
+        return caseDetail != null;
     }
 
     public static Boolean validateCustomer(CustomerEntity customer) {
