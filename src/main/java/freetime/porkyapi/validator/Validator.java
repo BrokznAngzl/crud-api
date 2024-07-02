@@ -5,8 +5,12 @@ import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.farm.model.FarmEntity;
 import freetime.porkyapi.housing.model.HousingEntity;
 import freetime.porkyapi.importation.model.ImportEntity;
+import freetime.porkyapi.importation.model.ImportRequestModel;
+import freetime.porkyapi.util.DateUtil;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 public class Validator {
     public static Boolean validateID(BigInteger id) {
@@ -33,7 +37,33 @@ public class Validator {
         return breeds != null;
     }
 
-    public static Boolean validateImport(ImportEntity importation) {
-        return importation != null;
+    public static Boolean validateImport(ImportEntity importation, String controller) {
+        if (importation != null) {
+
+            if (controller.equals("create") || controller.equals("update")) {
+                return !DateUtil.afterToday(importation.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
+            }
+        }
+        return false;
+    }
+
+    public static Boolean validateImport(ImportRequestModel importation, String controller) {
+        if (importation != null) {
+
+            if (controller.equals("find")) {
+                if ( (importation.getStartDate() != null && !importation.getStartDate().isEmpty()) &&
+                        (importation.getEndDate() != null && !importation.getEndDate().isEmpty()) ) {
+                    return DateUtil.dateChecker(importation.getStartDate(), importation.getEndDate(),
+                            String.valueOf(DateUtil.ISO_LOCAL_DATE));
+                }
+                else {
+                    return true;
+                }
+
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 }

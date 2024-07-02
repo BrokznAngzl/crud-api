@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface ImportDAO {
     public List<?> getImportWithHousingName();
-    public List<?> getImportWithHousingName(ImportRequestModel housing);
+    public List<?> getImportWithHousingName(ImportRequestModel importation);
 }

@@ -38,7 +38,7 @@ public class ImportService {
     public ResponseEntity<?> getAllImport(ImportRequestModel importation) {
         try {
             List<?> result = new ArrayList<>();
-            result =  importDAO.getImportWithHousingName(importation);
+            result = (importation == null)? importDAO.getImportWithHousingName() : importDAO.getImportWithHousingName(importation);;
             log.info("get all import successfully.");
             return ResponseEntity.ok(result);
         } catch (Exception e) {

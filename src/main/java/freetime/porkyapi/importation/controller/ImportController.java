@@ -20,34 +20,34 @@ public class ImportController {
     private ImportService importService;
 
     @PostMapping
-    public ResponseEntity<?> createImport(@RequestBody ImportEntity Importation) {
-        if (!Validator.validateImport(Importation)) {
-            log.warn("Invalid Importation data for {}", Importation);
+    public ResponseEntity<?> createImport(@RequestBody ImportEntity importation) {
+        if (!Validator.validateImport(importation, "create")) {
+            log.warn("Invalid Importation data for {}", importation);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
         }
 
-        log.info("Creating Importation {}", Importation);
-        return importService.saveImport(Importation, false);
+        log.info("Creating Importation {}", importation);
+        return importService.saveImport(importation, false);
     }
 
     @PutMapping
-    public ResponseEntity<?> editImport(@RequestBody ImportEntity Importation) {
-        if (!Validator.validateImport(Importation)) {
-            log.info("Invalid Importation data for {}", Importation);
+    public ResponseEntity<?> editImport(@RequestBody ImportEntity importation) {
+        if (!Validator.validateImport(importation, "update")) {
+            log.info("Invalid Importation data for {}", importation);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
         }
 
-        log.info("Updating Importation {}", Importation);
-        return importService.saveImport(Importation, true);
+        log.info("Updating Importation {}", importation);
+        return importService.saveImport(importation, true);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteImport(@RequestBody ImportEntity Importation) {
-        if (!Validator.validateID(Importation.getImportID())) {
-            log.warn("Invalid Importation data for {}", Importation);
+    public ResponseEntity<?> deleteImport(@RequestBody ImportEntity importation) {
+        if (!Validator.validateID(importation.getImportID())) {
+            log.warn("Invalid Importation data for {}", importation);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
         }
-        return importService.deleteImport(Importation.getImportID());
+        return importService.deleteImport(importation.getImportID());
     }
 
     @GetMapping
@@ -63,10 +63,14 @@ public class ImportController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<?> findImport(@RequestBody ImportRequestModel Importation) {
+    public ResponseEntity<?> findImport(@RequestBody ImportRequestModel importation) {
         try {
+            if (!Validator.validateImport(importation, "find")){
+                log.warn("Invalid Importation data for {}", importation);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
+            }
             log.info("Retrieving all Importations");
-            return importService.getAllImport(Importation);
+            return importService.getAllImport(importation);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(e.getMessage());
