@@ -20,14 +20,14 @@ public class CaseDetailDAOImpl implements CaseDetailDAO {
     @Override
     public List<?> getCaseDetailWhere(CaseDetailEntity caseDetail) {
         StringBuilder sql = new StringBuilder(
-                "SELECT c.causesid, c.causes\n" +
-                        "FROM casecauses c\n" +
+                "SELECT c.causeid, c.cause \n" +
+                        "FROM casecause c \n" +
                         "WHERE 1=1;");
 
         List<Object> params = new ArrayList<>();
         if (caseDetail != null) {
             if (caseDetail.getCause() != null && !caseDetail.getCause().isEmpty()) {
-                sql.append("AND LOWER(causes) LIKE LOWER(?) \n");
+                sql.append("AND LOWER(cause) LIKE LOWER(?) \n");
                 params.add(SQLAssistant.likeAll(caseDetail.getCause()));
             }
         }
