@@ -11,8 +11,6 @@ import freetime.porkyapi.util.DateUtil;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 
 public class Validator {
     public static Boolean validateID(BigInteger id) {
@@ -46,9 +44,9 @@ public class Validator {
     public static Boolean validateImport(ImportEntity importation, String controller) {
         if (importation != null) {
 
-            if ( (controller.equals("create") || controller.equals("update")) &&
+            if ((controller.equals("create") || controller.equals("update")) &&
                     (!(importation.getQuanity().compareTo(BigDecimal.ZERO) < 0) &&
-                            !(importation.getAvgWeight().compareTo(BigDecimal.ZERO) < 0)) ){
+                            !(importation.getAvgWeight().compareTo(BigDecimal.ZERO) < 0))) {
                 return !DateUtil.afterToday(importation.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
             }
         }
@@ -59,12 +57,11 @@ public class Validator {
         if (importation != null) {
 
             if (controller.equals("find")) {
-                if ( (importation.getStartDate() != null && !importation.getStartDate().isEmpty()) &&
-                        (importation.getEndDate() != null && !importation.getEndDate().isEmpty()) ) {
+                if ((importation.getStartDate() != null && !importation.getStartDate().isEmpty()) &&
+                        (importation.getEndDate() != null && !importation.getEndDate().isEmpty())) {
                     return DateUtil.dateChecker(importation.getStartDate(), importation.getEndDate(),
                             String.valueOf(DateUtil.ISO_LOCAL_DATE));
-                }
-                else {
+                } else {
                     return true;
                 }
 

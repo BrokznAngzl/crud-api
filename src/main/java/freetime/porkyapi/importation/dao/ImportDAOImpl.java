@@ -1,5 +1,6 @@
 package freetime.porkyapi.importation.dao;
 
+import freetime.porkyapi.consts.SQLAssistant;
 import freetime.porkyapi.importation.model.ImportRequestModel;
 import freetime.porkyapi.importation.model.ImportResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ImportDAOImpl implements ImportDAO {
 
     @Override
     public List<?> getImportWithHousingName() {
-        String query = "SELECT i.importid, i.date, i.avgweight, i.quanity, b.breedsname, h.housingname \n" +
+        String query = "SELECT i.importid, i.importcode, i.date, i.avgweight, i.quanity, b.breedsname, h.housingname \n" +
                 "FROM import i\n" +
                 "         LEFT JOIN housing h ON i.housingid = h.housingid \n" +
                 "         LEFT JOIN breeds b ON i.breeds = b.breedsid \n" +
@@ -30,7 +31,7 @@ public class ImportDAOImpl implements ImportDAO {
     @Override
     public List<?> getImportWithHousingName(ImportRequestModel importation) {
         StringBuilder sql = new StringBuilder(
-                "SELECT i.importid, i.date, i.avgweight, i.quanity, b.breedsname, h.housingname\n" +
+                "SELECT i.importid, i.importcode, i.date, i.avgweight, i.quanity, b.breedsname, h.housingname\n" +
                         "FROM import i\n" +
                         "         LEFT JOIN housing h ON i.housingid = h.housingid\n" +
                         "         LEFT JOIN breeds b ON i.breeds = b.breedsid\n" +
@@ -67,6 +68,10 @@ public class ImportDAOImpl implements ImportDAO {
             if (importation.getQuanity() != null) {
                 sql.append("AND i.quanity = ? \n");
                 params.add(importation.getQuanity());
+            }
+            if (importation.getImportCode() != null && !importation.getImportCode().isEmpty()) {
+                sql.append("AND i.importcode LIKE ? \n");
+                params.add(importation.getImportCode());
             }
         }
 

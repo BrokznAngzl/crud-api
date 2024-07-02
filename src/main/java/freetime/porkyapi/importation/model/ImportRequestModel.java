@@ -14,4 +14,5 @@ public class ImportRequestModel {
     private BigInteger housingID;
     private BigDecimal avgWeight;
     private BigDecimal quanity;
+    private String importCode;
 }

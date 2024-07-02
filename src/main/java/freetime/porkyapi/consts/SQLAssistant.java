@@ -12,4 +12,8 @@ public class SQLAssistant {
     public static String likeAfter(String str) {
         return str.concat("%");
     }
+
+    public static String Str(String str) {
+        return "'".concat(str).concat("'");
+    }
 }

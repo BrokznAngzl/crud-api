@@ -16,6 +16,8 @@ public class ImportEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger importID;
 
+    @Column(name = "importcode")
+    private String importCode;
     @Column(name = "date")
     private String date;
     @Column(name = "quanity")
