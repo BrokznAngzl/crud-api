@@ -2,7 +2,6 @@ package freetime.porkyapi.death.dao;
 
 import freetime.porkyapi.death.model.DeathRequestModel;
 import freetime.porkyapi.death.model.DeathResponseModel;
-import freetime.porkyapi.importation.model.ImportResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

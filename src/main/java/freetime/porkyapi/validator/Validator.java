@@ -45,7 +45,7 @@ public class Validator {
 
     public static Boolean validateDeath(DeathEntity death) {
         if (death != null) {
-            if (!(death.getQuantity().compareTo(BigDecimal.ZERO) < 0)) {
+            if (death.getQuantity() != null && !(death.getQuantity().compareTo(BigDecimal.ZERO) < 0)) {
                 return !DateUtil.afterToday(death.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
             }
             return false;
