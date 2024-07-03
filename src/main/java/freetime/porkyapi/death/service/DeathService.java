@@ -39,7 +39,7 @@ public class DeathService {
     public ResponseEntity<?> getAllDeath(DeathRequestModel death) {
         try {
             List<?> result = new ArrayList<>();
-            result = (death == null)? deathDAO.getAllDeath() : deathDAO.getAllDeathWhere(death);;
+            result = deathDAO.getAllDeathWhere(death);
             log.info("get all import successfully.");
             return ResponseEntity.ok(result);
         } catch (Exception e) {
