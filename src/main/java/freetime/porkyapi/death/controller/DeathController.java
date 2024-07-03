@@ -21,25 +21,25 @@ public class DeathController {
 
     @PostMapping
     public ResponseEntity<?> createDeath(@RequestBody DeathEntity death) {
-//        if (!Validator.validateDeath(death, "create")) {
-//            log.warn("Invalid Death data for {}", death);
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Death data");
-//        }
+        if (!Validator.validateDeath(death)) {
+            log.warn("Invalid Death data for {}", death);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Death data");
+        }
 
         log.info("Creating Death {}", death);
         return deathService.saveDeath(death, false);
     }
 
-//    @PutMapping
-//    public ResponseEntity<?> editDeath(@RequestBody DeathEntity death) {
-//        if (!Validator.validateDeath(death, "update")) {
-//            log.info("Invalid Death data for {}", death);
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Death data");
-//        }
-//
-//        log.info("Updating Death {}", death);
-//        return deathService.saveDeath(death, true);
-//    }
+    @PutMapping
+    public ResponseEntity<?> editDeath(@RequestBody DeathEntity death) {
+        if (!Validator.validateDeath(death)) {
+            log.info("Invalid Death data for {}", death);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Death data");
+        }
+
+        log.info("Updating Death {}", death);
+        return deathService.saveDeath(death, true);
+    }
 
     @DeleteMapping
     public ResponseEntity<?> deleteDeath(@RequestBody DeathEntity death) {
@@ -62,19 +62,19 @@ public class DeathController {
         }
     }
 
-//    @PostMapping("/find")
-//    public ResponseEntity<?> findDeath(@RequestBody DeathRequestModel death) {
-//        try {
-//            if (!Validator.validateDeath(death, "find")){
-//                log.warn("Invalid Death data for {}", death);
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Death data");
-//            }
-//            log.info("Retrieving all Deaths");
-//            return deathService.getAllDeath(death);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            log.error(e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
+    @PostMapping("/find")
+    public ResponseEntity<?> findDeath(@RequestBody DeathRequestModel death) {
+        try {
+            if (!Validator.validateDeath(death)){
+                log.warn("Invalid Death data for {}", death);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Death data");
+            }
+            log.info("Retrieving all Deaths");
+            return deathService.getAllDeath(death);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

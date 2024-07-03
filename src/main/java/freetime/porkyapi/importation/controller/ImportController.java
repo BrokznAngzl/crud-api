@@ -21,7 +21,7 @@ public class ImportController {
 
     @PostMapping
     public ResponseEntity<?> createImport(@RequestBody ImportEntity importation) {
-        if (!Validator.validateImport(importation, "create")) {
+        if (!Validator.validateImport(importation)) {
             log.warn("Invalid Importation data for {}", importation);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
         }
@@ -32,7 +32,7 @@ public class ImportController {
 
     @PutMapping
     public ResponseEntity<?> editImport(@RequestBody ImportEntity importation) {
-        if (!Validator.validateImport(importation, "update")) {
+        if (!Validator.validateImport(importation)) {
             log.info("Invalid Importation data for {}", importation);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
         }
@@ -65,7 +65,7 @@ public class ImportController {
     @PostMapping("/find")
     public ResponseEntity<?> findImport(@RequestBody ImportRequestModel importation) {
         try {
-            if (!Validator.validateImport(importation, "find")){
+            if (!Validator.validateImport(importation)){
                 log.warn("Invalid Importation data for {}", importation);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Importation data");
             }

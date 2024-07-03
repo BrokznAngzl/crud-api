@@ -8,7 +8,8 @@ import java.math.BigInteger;
 @Data
 public class DeathRequestModel {
     private BigInteger deathID;
-    private String date;
+    private String startDate;
+    private String endDate;
     private BigInteger cause;
     private BigDecimal quantity;
     private BigInteger importCode;
