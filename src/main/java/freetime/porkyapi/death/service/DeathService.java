@@ -1,17 +1,20 @@
 package freetime.porkyapi.death.service;
 
 
-
 import freetime.porkyapi.death.dao.DeathDAO;
 import freetime.porkyapi.death.model.DeathEntity;
 import freetime.porkyapi.death.model.DeathRequestModel;
 import freetime.porkyapi.death.repository.DeathRepository;
+import freetime.porkyapi.importation.model.ImportEntity;
+import freetime.porkyapi.importation.repository.ImportRepository;
+import freetime.porkyapi.importation.service.ImportService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +27,24 @@ public class DeathService {
     private DeathRepository deathRepository;
     @Autowired
     private DeathDAO deathDAO;
+    @Autowired
+    private ImportRepository importRepo;
 
     public ResponseEntity<?> saveDeath(DeathEntity death, HttpStatus status) {
         try {
-            deathRepository.save(death);
-            log.info("save {} successfully.", death);
-            return ResponseEntity.status(status).build();
+            ImportEntity importation = importRepo.findImportEntityByImportID(death.getImportid());
+            BigDecimal deathSum = deathDAO.getDeathSum(death.getImportid());
+            BigDecimal importQuantity = importation.getQuanity();
+            BigDecimal currentTotal = importQuantity.subtract(deathSum);
+            if ((death.getQuantity().compareTo(currentTotal) <= 0)) {
+                deathRepository.save(death);
+                log.info("save {} successfully.", death);
+                return ResponseEntity.status(status).build();
+            }
+            else {
+                log.warn("could not create {}", death);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

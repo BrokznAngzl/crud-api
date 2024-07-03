@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,4 +71,17 @@ public class DeathDAOImpl implements DeathDAO {
 
         return jdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<>(DeathResponseModel.class));
     }
+
+    @Override
+    public BigDecimal getDeathSum(BigInteger importID){
+        String sql =
+                "SELECT SUM(d.quantity)\n" +
+                "FROM import i\n" +
+                "LEFT JOIN death d on i.importid = d.importid\n" +
+                "WHERE i.importid = ?\n" +
+                "GROUP BY d.importid";
+        BigDecimal result = jdbcTemplate.queryForObject(sql, BigDecimal.class, importID);
+        return (result != null) ? result : new BigDecimal(0);
+    }
+
 }
