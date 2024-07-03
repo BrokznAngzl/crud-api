@@ -25,11 +25,11 @@ public class DeathService {
     @Autowired
     private DeathDAO deathDAO;
 
-    public ResponseEntity<?> saveDeath(DeathEntity death, Boolean isEdit) {
+    public ResponseEntity<?> saveDeath(DeathEntity death, HttpStatus status) {
         try {
             deathRepository.save(death);
             log.info("save {} successfully.", death);
-            return isEdit ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.status(status).build();
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
