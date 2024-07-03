@@ -58,6 +58,17 @@ public class ImportService {
         }
     }
 
+    public ResponseEntity<?> getImportByCode(String code) {
+        try {
+            ImportEntity result = importRepo.findImportEntityByImportCode(code);
+            log.info("get import by code {} successfully.", code);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     public ResponseEntity<?> deleteImport(BigInteger id) {
         try {
             importRepo.deleteById(id);
@@ -68,4 +79,6 @@ public class ImportService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+
 }

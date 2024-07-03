@@ -27,7 +27,7 @@ public class DeathController {
         }
 
         log.info("Creating Death {}", death);
-        return deathService.saveDeath(death, HttpStatus.CREATED);
+        return deathService.saveDeath(death, HttpStatus.CREATED, true);
     }
 
     @PutMapping
@@ -38,7 +38,7 @@ public class DeathController {
         }
 
         log.info("Updating Death {}", death);
-        return deathService.saveDeath(death, HttpStatus.OK);
+        return deathService.saveDeath(death, HttpStatus.OK, false);
     }
 
     @DeleteMapping

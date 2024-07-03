@@ -62,6 +62,18 @@ public class ImportController {
         }
     }
 
+    @GetMapping("/code")
+    public ResponseEntity<?> getImportByCode(@RequestParam String code) {
+        try {
+            log.info("Retrieving Import code {}", code);
+            return importService.getImportByCode(code);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PostMapping("/find")
     public ResponseEntity<?> findImport(@RequestBody ImportRequestModel importation) {
         try {

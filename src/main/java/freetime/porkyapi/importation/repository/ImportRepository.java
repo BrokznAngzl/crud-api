@@ -7,4 +7,5 @@ import java.math.BigInteger;
 
 public interface ImportRepository extends JpaRepository<ImportEntity, BigInteger> {
     ImportEntity findImportEntityByImportID(BigInteger importId);
+    ImportEntity findImportEntityByImportCode(String importCode);
 }
