@@ -5,6 +5,7 @@ import freetime.porkyapi.casedetail.model.CaseDetailEntity;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.death.model.DeathEntity;
 import freetime.porkyapi.death.model.DeathRequestModel;
+import freetime.porkyapi.deathreport.model.DeathRptRequestModel;
 import freetime.porkyapi.farm.model.FarmEntity;
 import freetime.porkyapi.housing.model.HousingEntity;
 import freetime.porkyapi.importation.model.ImportEntity;
@@ -87,4 +88,10 @@ public class Validator {
         }
         return false;
     }
+
+    public static Boolean validateDeathRpt(DeathRptRequestModel deathRpt) {
+        return deathRpt != null;
+    }
+
+
 }
