@@ -19,7 +19,7 @@ public class DeathRptController {
     private DeathRptService deathRptService;
 
     @GetMapping
-    public ResponseEntity<?> getAllDeaths() {
+    public ResponseEntity<?> getAllRptDeaths() {
         try {
             log.info("Retrieving all Deaths");
             return deathRptService.getAllDeath(null);
@@ -31,7 +31,7 @@ public class DeathRptController {
     }
 
     @PostMapping("/find")
-    public ResponseEntity<?> findDeath(@RequestBody DeathRptRequestModel death) {
+    public ResponseEntity<?> findDeathRpt(@RequestBody DeathRptRequestModel death) {
         try {
             if (!Validator.validateDeathRpt(death)) {
                 log.warn("Invalid death report data for {}", death);

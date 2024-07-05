@@ -36,7 +36,7 @@ public class DeathService {
             BigDecimal importQuantity = importation.getQuanity();
 
             BigDecimal currentTotal = isNewRecord ? importQuantity.subtract(deathSum)
-                    : deathSum.subtract(getPrevQuantity(death.getDeathID()));
+                    : importQuantity.subtract(deathSum.subtract(getPrevQuantity(death.getDeathID())));
 
             if ((death.getQuantity().compareTo(currentTotal) <= 0)) {
                 deathRepository.save(death);

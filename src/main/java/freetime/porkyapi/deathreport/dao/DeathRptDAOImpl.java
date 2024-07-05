@@ -30,18 +30,18 @@ public class DeathRptDAOImpl implements DeathRptDAO {
         if (requestModel != null) {
             if ((requestModel.getStartDate() != null && !requestModel.getStartDate().isEmpty()) &&
                     (requestModel.getEndDate() != null && !requestModel.getEndDate().isEmpty())) {
-                sql.append("AND d.date BETWEEN ? AND ? \n");
+                sql.append("AND i.date BETWEEN ? AND ? \n");
                 params.add(requestModel.getStartDate());
                 params.add(requestModel.getEndDate());
             } else if (requestModel.getStartDate() != null && !requestModel.getStartDate().isEmpty()) {
-                sql.append("AND d.date >= ? \n");
+                sql.append("AND i.date >= ? \n");
                 params.add(requestModel.getStartDate());
             } else if (requestModel.getEndDate() != null && !requestModel.getEndDate().isEmpty()) {
-                sql.append("AND d.date <= ? \n");
+                sql.append("AND i.date <= ? \n");
                 params.add(requestModel.getEndDate());
             }
-            if (requestModel.getImportCode() != null && !requestModel.getImportCode().isEmpty()) {
-                sql.append("AND i.importcode = ? \n");
+            if (requestModel.getImportCode() != null) {
+                sql.append("AND i.importid = ? \n");
                 params.add(requestModel.getImportCode());
             }
         }
