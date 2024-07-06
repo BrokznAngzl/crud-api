@@ -27,37 +27,40 @@ public class ExportDAOImpl implements ExportDAO {
                         "FROM export e\n" +
                         "         LEFT JOIN import i on i.importid = e.importid\n" +
                         "         LEFT JOIN customer c on c.customerid = e.costomerid\n" +
-                        "WHERE 1=1"
+                        "WHERE 1=1\n"
         );
 
         List<Object> params = new ArrayList<>();
-//        if (death != null) {
-//            if ((death.getStartDate() != null && !death.getStartDate().isEmpty()) &&
-//                    (death.getEndDate() != null && !death.getEndDate().isEmpty())) {
-//                sql.append("AND d.date BETWEEN ? AND ? \n");
-//                params.add(death.getStartDate());
-//                params.add(death.getEndDate());
-//            } else if (death.getStartDate() != null && !death.getStartDate().isEmpty()) {
-//                sql.append("AND d.date >= ? \n");
-//                params.add(death.getStartDate());
-//            } else if (death.getEndDate() != null && !death.getEndDate().isEmpty()) {
-//                sql.append("AND d.date <= ? \n");
-//                params.add(death.getEndDate());
-//            }
-//
-//            if (death.getCause() != null) {
-//                sql.append("AND c.causeid = ? \n");
-//                params.add(death.getCause());
-//            }
-//            if (death.getImportCode() != null) {
-//                sql.append("AND i.importid = ? \n");
-//                params.add(death.getImportCode());
-//            }
-//            if (death.getQuantity() != null) {
-//                sql.append("AND d.quantity = ? \n");
-//                params.add(death.getQuantity());
-//            }
-//        }
+        if (export != null) {
+            if ((export.getStartDate() != null && !export.getStartDate().isEmpty()) &&
+                    (export.getEndDate() != null && !export.getEndDate().isEmpty())) {
+                sql.append("AND e.date BETWEEN ? AND ? \n");
+                params.add(export.getStartDate());
+                params.add(export.getEndDate());
+            } else if (export.getStartDate() != null && !export.getStartDate().isEmpty()) {
+                sql.append("AND e.date >= ? \n");
+                params.add(export.getStartDate());
+            } else if (export.getEndDate() != null && !export.getEndDate().isEmpty()) {
+                sql.append("AND e.date <= ? \n");
+                params.add(export.getEndDate());
+            }
+            if (export.getExportCode() != null && !export.getExportCode().isEmpty()) {
+                sql.append("AND e.exportcode = ? \n");
+                params.add(export.getExportCode());
+            }
+            if (export.getQuantity() != null) {
+                sql.append("AND e.quantity = ? \n");
+                params.add(export.getQuantity());
+            }
+            if (export.getImportID() != null) {
+                sql.append("AND i.importid = ? \n");
+                params.add(export.getImportID());
+            }
+            if (export.getCustomerID() != null) {
+                sql.append("AND e.costomerid =  ? \n");
+                params.add(export.getCustomerID());
+            }
+        }
 
         return jdbcTemplate.query(sql.toString(), params.toArray(), new BeanPropertyRowMapper<>(ExportResponseModel.class));
     }
@@ -67,7 +70,7 @@ public class ExportDAOImpl implements ExportDAO {
         String sql =
                 "SELECT SUM(d.quantity)\n" +
                 "FROM import i\n" +
-                "LEFT JOIN death d on i.importid = d.importid\n" +
+                "LEFT JOIN export d on i.importid = d.importid\n" +
                 "WHERE i.importid = ?\n" +
                 "GROUP BY d.importid";
 
