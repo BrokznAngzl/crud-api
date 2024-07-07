@@ -68,11 +68,10 @@ public class ExportDAOImpl implements ExportDAO {
     @Override
     public BigDecimal getExportSum(BigInteger exportID){
         String sql =
-                "SELECT SUM(d.quantity)\n" +
-                "FROM import i\n" +
-                "LEFT JOIN export d on i.importid = d.importid\n" +
-                "WHERE i.importid = ?\n" +
-                "GROUP BY d.importid";
+                "SELECT SUM(e.quantity) \n" +
+                "FROM export e \n" +
+                "LEFT JOIN import i on i.importid = e.importid \n" +
+                "WHERE i.importid = ? ;";
 
         BigDecimal result = jdbcTemplate.queryForObject(sql, BigDecimal.class, exportID);
         return (result != null) ? result : new BigDecimal(0);

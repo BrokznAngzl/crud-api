@@ -1,16 +1,20 @@
 package freetime.porkyapi.export.service;
 
 
+import freetime.porkyapi.death.dao.DeathDAO;
 import freetime.porkyapi.export.dao.ExportDAO;
 import freetime.porkyapi.export.model.ExportEntity;
 import freetime.porkyapi.export.model.ExportRequestModel;
 import freetime.porkyapi.export.repository.ExportRepository;
+import freetime.porkyapi.importation.model.ImportEntity;
+import freetime.porkyapi.importation.repository.ImportRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,30 +25,39 @@ import java.util.Optional;
 public class ExportService {
     @Autowired
     private ExportRepository exportRepository;
+
+
     @Autowired
     private ExportDAO exportDAO;
+    @Autowired
+    private DeathDAO deathDAO;
+    @Autowired
+    private ImportRepository importRepository;
 
     public ResponseEntity<?> saveExport(ExportEntity export, HttpStatus status, boolean isNewRecord) {
-//        try {
-//            ExportEntity importation = exportRepository.findExportEntityByExportID(export.getExportid());
-//            BigDecimal exportSum = exportDAO.getExportSum(export.getExportid());
-//            BigDecimal importQuantity = importation.getQuanity();
-//
-//            BigDecimal currentTotal = isNewRecord ? importQuantity.subtract(exportSum)
-//                    : importQuantity.subtract(exportSum.subtract(getPrevQuantity(export.getExportID())));
-//
-//            if ((export.getQuantity().compareTo(currentTotal) <= 0)) {
-//                exportRepository.save(export);
-//                log.info("save {} successfully.", export);
-//                return ResponseEntity.status(status).build();
-//            } else {
-//                log.warn("could not save {}", export);
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//            }
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//        }
+        try {
+            ImportEntity importation = importRepository.findImportEntityByImportID(export.getImportID());
+            BigDecimal importQuantity = importation.getQuanity();
+
+            BigDecimal exportSum = exportDAO.getExportSum(importation.getImportID());
+            BigDecimal deathSum = deathDAO.getDeathSum(importation.getImportID());
+            BigDecimal reduceTotal = exportSum.add(deathSum);
+
+            BigDecimal currentTotal = isNewRecord ? importQuantity.subtract(reduceTotal)
+                    : importQuantity.subtract(reduceTotal.subtract(getPrevQuantity(export.getExportID())));
+
+            if ((export.getQuantity().compareTo(currentTotal) <= 0)) {
+                exportRepository.save(export);
+                log.info("save {} successfully.", export);
+                return ResponseEntity.status(status).build();
+            } else {
+                log.warn("could not save {}", export);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     public ResponseEntity<?> getAllExport(ExportRequestModel export) {
@@ -93,5 +106,8 @@ public class ExportService {
         }
     }
 
-
+    private BigDecimal getPrevQuantity(BigInteger id) {
+        ExportEntity export = exportRepository.findExportEntityByExportID(id);
+        return (export.getQuantity() != null) ? export.getQuantity() : new BigDecimal(0);
+    }
 }
