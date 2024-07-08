@@ -96,11 +96,26 @@ public class Validator {
     }
 
     public static Boolean validateExport(ExportEntity export) {
-        return export != null;
+        if (export != null) {
+            if (!(export.getQuantity().compareTo(BigDecimal.ZERO) < 0) &&
+                    !(export.getAvgweight().compareTo(BigDecimal.ZERO) < 0)) {
+                return !DateUtil.afterToday(export.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
+            }
+            return false;
+        }
+        return false;
     }
 
     public static Boolean validateExport(ExportRequestModel export) {
-        return export != null;
+        if (export != null) {
+            if ((export.getStartDate() != null && !export.getStartDate().isEmpty()) &&
+                    (export.getEndDate() != null && !export.getEndDate().isEmpty())) {
+                return DateUtil.dateChecker(export.getStartDate(), export.getEndDate(),
+                        String.valueOf(DateUtil.ISO_LOCAL_DATE));
+            }
+            return true;
+        }
+        return false;
     }
 
 
