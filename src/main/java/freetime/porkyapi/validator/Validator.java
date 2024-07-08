@@ -48,7 +48,7 @@ public class Validator {
 
     public static Boolean validateDeath(DeathEntity death) {
         if (death != null) {
-            if (death.getQuantity() != null && !(death.getQuantity().compareTo(BigDecimal.ZERO) < 0)) {
+            if (death.getQuantity() != null && (death.getQuantity().compareTo(BigDecimal.ZERO) > 0)) {
                 return !DateUtil.afterToday(death.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
             }
             return false;
@@ -70,8 +70,8 @@ public class Validator {
 
     public static Boolean validateImport(ImportEntity importation) {
         if (importation != null) {
-            if (!(importation.getQuanity().compareTo(BigDecimal.ZERO) < 0) &&
-                    !(importation.getAvgWeight().compareTo(BigDecimal.ZERO) < 0)) {
+            if ((importation.getQuanity().compareTo(BigDecimal.ZERO) > 0) &&
+                    (importation.getAvgWeight().compareTo(BigDecimal.ZERO) > 0)) {
                 return !DateUtil.afterToday(importation.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
             }
             return false;
@@ -97,8 +97,8 @@ public class Validator {
 
     public static Boolean validateExport(ExportEntity export) {
         if (export != null) {
-            if (!(export.getQuantity().compareTo(BigDecimal.ZERO) < 0) &&
-                    !(export.getAvgweight().compareTo(BigDecimal.ZERO) < 0)) {
+            if ((export.getQuantity().compareTo(BigDecimal.ZERO) > 0) &&
+                    (export.getAvgweight().compareTo(BigDecimal.ZERO) > 0)) {
                 return !DateUtil.afterToday(export.getDate(), String.valueOf(DateUtil.ISO_LOCAL_DATE));
             }
             return false;

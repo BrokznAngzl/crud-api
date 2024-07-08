@@ -5,6 +5,7 @@ import freetime.porkyapi.death.dao.DeathDAO;
 import freetime.porkyapi.death.model.DeathEntity;
 import freetime.porkyapi.death.model.DeathRequestModel;
 import freetime.porkyapi.death.repository.DeathRepository;
+import freetime.porkyapi.export.dao.ExportDAO;
 import freetime.porkyapi.importation.model.ImportEntity;
 import freetime.porkyapi.importation.repository.ImportRepository;
 import lombok.extern.log4j.Log4j2;
@@ -28,15 +29,19 @@ public class DeathService {
     private DeathDAO deathDAO;
     @Autowired
     private ImportRepository importRepo;
+    @Autowired
+    private ExportDAO exportDAO;
 
     public ResponseEntity<?> saveDeath(DeathEntity death, HttpStatus status, boolean isNewRecord) {
         try {
             ImportEntity importation = importRepo.findImportEntityByImportID(death.getImportid());
             BigDecimal deathSum = deathDAO.getDeathSum(death.getImportid());
+            BigDecimal exportSum = exportDAO.getExportSum(importation.getImportID());
             BigDecimal importQuantity = importation.getQuanity();
+            BigDecimal reduceTotal = exportSum.add(deathSum);
 
-            BigDecimal currentTotal = isNewRecord ? importQuantity.subtract(deathSum)
-                    : importQuantity.subtract(deathSum.subtract(getPrevQuantity(death.getDeathID())));
+            BigDecimal currentTotal = isNewRecord ? importQuantity.subtract(reduceTotal)
+                    : importQuantity.subtract(reduceTotal.subtract(getPrevQuantity(death.getDeathID())));
 
             if ((death.getQuantity().compareTo(currentTotal) <= 0)) {
                 deathRepository.save(death);
