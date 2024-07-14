@@ -1,7 +1,7 @@
-package freetime.porkyapi.deathreport.controller;
+package freetime.porkyapi.report.deathreport.controller;
 
-import freetime.porkyapi.deathreport.model.DeathRptRequestModel;
-import freetime.porkyapi.deathreport.service.DeathRptService;
+import freetime.porkyapi.report.deathreport.model.DeathRptRequestModel;
+import freetime.porkyapi.report.deathreport.service.DeathRptService;
 import freetime.porkyapi.validator.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

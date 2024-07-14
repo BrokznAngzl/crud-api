@@ -5,7 +5,7 @@ import freetime.porkyapi.casedetail.model.CaseDetailEntity;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.death.model.DeathEntity;
 import freetime.porkyapi.death.model.DeathRequestModel;
-import freetime.porkyapi.deathreport.model.DeathRptRequestModel;
+import freetime.porkyapi.report.deathreport.model.DeathRptRequestModel;
 import freetime.porkyapi.export.model.ExportEntity;
 import freetime.porkyapi.export.model.ExportRequestModel;
 import freetime.porkyapi.farm.model.FarmEntity;

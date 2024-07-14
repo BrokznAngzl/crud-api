@@ -1,7 +1,7 @@
-package freetime.porkyapi.deathreport.dao;
+package freetime.porkyapi.report.deathreport.dao;
 
-import freetime.porkyapi.deathreport.model.DeathRptRequestModel;
-import freetime.porkyapi.deathreport.model.DeathRptResponseModel;
+import freetime.porkyapi.report.deathreport.model.DeathRptRequestModel;
+import freetime.porkyapi.report.deathreport.model.DeathRptResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

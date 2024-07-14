@@ -1,4 +1,4 @@
-package freetime.porkyapi.deathreport.model;
+package freetime.porkyapi.report.deathreport.model;
 
 import lombok.Data;
 

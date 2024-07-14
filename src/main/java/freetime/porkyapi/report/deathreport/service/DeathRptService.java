@@ -1,8 +1,8 @@
-package freetime.porkyapi.deathreport.service;
+package freetime.porkyapi.report.deathreport.service;
 
 
-import freetime.porkyapi.deathreport.dao.DeathRptDAO;
-import freetime.porkyapi.deathreport.model.DeathRptRequestModel;
+import freetime.porkyapi.report.deathreport.dao.DeathRptDAO;
+import freetime.porkyapi.report.deathreport.model.DeathRptRequestModel;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

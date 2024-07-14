@@ -1,6 +1,6 @@
-package freetime.porkyapi.deathreport.dao;
+package freetime.porkyapi.report.deathreport.dao;
 
-import freetime.porkyapi.deathreport.model.DeathRptRequestModel;
+import freetime.porkyapi.report.deathreport.model.DeathRptRequestModel;
 
 import java.util.List;
 
