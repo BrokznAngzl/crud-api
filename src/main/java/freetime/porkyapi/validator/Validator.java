@@ -5,6 +5,7 @@ import freetime.porkyapi.casedetail.model.CaseDetailEntity;
 import freetime.porkyapi.customer.model.CustomerEntity;
 import freetime.porkyapi.death.model.DeathEntity;
 import freetime.porkyapi.death.model.DeathRequestModel;
+import freetime.porkyapi.report.adgreport.model.ADGRptRequestModel;
 import freetime.porkyapi.report.deathreport.model.DeathRptRequestModel;
 import freetime.porkyapi.export.model.ExportEntity;
 import freetime.porkyapi.export.model.ExportRequestModel;
@@ -91,10 +92,6 @@ public class Validator {
         return false;
     }
 
-    public static Boolean validateDeathRpt(DeathRptRequestModel deathRpt) {
-        return deathRpt != null;
-    }
-
     public static Boolean validateExport(ExportEntity export) {
         if (export != null) {
             if ((export.getQuantity().compareTo(BigDecimal.ZERO) > 0) &&
@@ -118,5 +115,28 @@ public class Validator {
         return false;
     }
 
+    public static Boolean validateADGRpt(ADGRptRequestModel ADGReqModel) {
+        if (ADGReqModel != null) {
+            if ((ADGReqModel.getStartDate() != null && !ADGReqModel.getStartDate().isEmpty()) &&
+                    (ADGReqModel.getEndDate() != null && !ADGReqModel.getEndDate().isEmpty())) {
+                return DateUtil.dateChecker(ADGReqModel.getStartDate(), ADGReqModel.getEndDate(),
+                        String.valueOf(DateUtil.ISO_LOCAL_DATE));
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static Boolean validateDeathRpt(DeathRptRequestModel deathRpt) {
+        if (deathRpt != null) {
+            if ((deathRpt.getStartDate() != null && !deathRpt.getStartDate().isEmpty()) &&
+                    (deathRpt.getEndDate() != null && !deathRpt.getEndDate().isEmpty())) {
+                return DateUtil.dateChecker(deathRpt.getStartDate(), deathRpt.getEndDate(),
+                        String.valueOf(DateUtil.ISO_LOCAL_DATE));
+            }
+            return true;
+        }
+        return false;
+    }
 
 }

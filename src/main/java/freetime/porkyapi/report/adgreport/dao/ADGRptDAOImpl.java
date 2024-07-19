@@ -20,9 +20,9 @@ public class ADGRptDAOImpl implements ADGRptDAO {
     @Override
     public List<?> findAverageDailyGrain(ADGRptRequestModel requestModel) {
         StringBuilder sql = new StringBuilder(
-                "SELECT e.exportcode, e.avgweight-i.avgweight AS \"grain weight\",\n" +
+                "SELECT e.exportcode,  e.date, e.avgweight-i.avgweight AS \"grain weight\",\n" +
                         "       EXTRACT(DAY FROM AGE(CAST(e.date AS timestamp), CAST(i.date AS timestamp))) AS \"day\",\n" +
-                        "       ROUND( e.avgweight-i.avgweight / EXTRACT(DAY FROM AGE(CAST(e.date AS timestamp), CAST(i.date AS timestamp))), 2)\n" +
+                        "       CONCAT( ROUND( (e.avgweight-i.avgweight) / (EXTRACT(DAY FROM AGE(CAST(e.date AS timestamp), CAST(i.date AS timestamp)))), 2), ' kg/d' ) \n" +
                         "        AS \"adg rate\"\n" +
                         "FROM export e\n" +
                         "         LEFT JOIN import i on i.importid = e.importid \n" +
@@ -30,6 +30,18 @@ public class ADGRptDAOImpl implements ADGRptDAO {
         );
         List<Object> params = new ArrayList<>();
         if (requestModel != null) {
+            if ((requestModel.getStartDate() != null && !requestModel.getStartDate().isEmpty()) &&
+                    (requestModel.getEndDate() != null && !requestModel.getEndDate().isEmpty())) {
+                sql.append("AND e.date BETWEEN ? AND ? \n");
+                params.add(requestModel.getStartDate());
+                params.add(requestModel.getEndDate());
+            } else if (requestModel.getStartDate() != null && !requestModel.getStartDate().isEmpty()) {
+                sql.append("AND e.date >= ? \n");
+                params.add(requestModel.getStartDate());
+            } else if (requestModel.getEndDate() != null && !requestModel.getEndDate().isEmpty()) {
+                sql.append("AND e.date <= ? \n");
+                params.add(requestModel.getEndDate());
+            }
             if (requestModel.getExportID() != null) {
                 sql.append("AND e.exportid = ? \n");
                 params.add(requestModel.getExportID());
