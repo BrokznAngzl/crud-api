@@ -1,7 +1,7 @@
-package freetime.porkyapi.farm.service;
+package freetime.porkyapi.breeds.service;
 
-import freetime.porkyapi.farm.model.FarmEntity;
-import freetime.porkyapi.farm.repository.FarmRepository;
+import freetime.porkyapi.breeds.model.BreedsEntity;
+import freetime.porkyapi.breeds.repository.BreedsRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,25 +14,25 @@ import java.util.Optional;
 
 @Log4j2
 @Service
-public class FarmService {
+public class BreedsService {
     @Autowired
-    private FarmRepository farmRepo;
+    private BreedsRepository breedsRepository;
 
-    public ResponseEntity<?> saveFarm(FarmEntity farm, Boolean isEdit) {
+    public ResponseEntity<?> saveBreeds(BreedsEntity breeds, Boolean isEdit) {
         try {
-            farmRepo.save(farm);
-            log.info("save {} successfully.", farm);
-            return isEdit? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CREATED).build();
+            breedsRepository.save(breeds);
+            log.info("save {} successfully.", breeds);
+            return isEdit ? ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    public ResponseEntity<?> getAllFarm() {
+    public ResponseEntity<?> getAllBreeds() {
         try {
-            List<FarmEntity> result = farmRepo.findAll();
-            log.info("getAllFarm successfully.");
+            List<BreedsEntity> result = breedsRepository.findAll();
+            log.info("get all breeds successfully.");
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -40,10 +40,10 @@ public class FarmService {
         }
     }
 
-    public ResponseEntity<?> getFarmById(BigInteger id) {
+    public ResponseEntity<?> getBreedsById(BigInteger id) {
         try {
-            Optional<FarmEntity> result = farmRepo.findById(id);
-            log.info("getFarmById {} successfully.", id);
+            Optional<BreedsEntity> result = breedsRepository.findById(id);
+            log.info("get breeds by Id {} successfully.", id);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -51,10 +51,10 @@ public class FarmService {
         }
     }
 
-    public ResponseEntity<?> deleteFarm(BigInteger id) {
+    public ResponseEntity<?> deleteBreeds(BigInteger id) {
         try {
-            farmRepo.deleteById(id);
-            log.info("deleteFarm id{} successfully.", id);
+            breedsRepository.deleteById(id);
+            log.info("delete breeds id {} successfully.", id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -62,10 +62,10 @@ public class FarmService {
         }
     }
 
-    public ResponseEntity<?> findFarmByName(String name) {
+    public ResponseEntity<?> findBreedsByName(String name) {
         try {
-            FarmEntity result = farmRepo.findByFarmName(name);
-            log.info("findFarmByName {} successfully.", name);
+            BreedsEntity result = breedsRepository.findByBreedsName(name);
+            log.info("find breeds by name {} successfully.", name);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             log.error(e.getMessage());

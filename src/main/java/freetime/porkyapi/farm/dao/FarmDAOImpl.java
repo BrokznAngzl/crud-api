@@ -1,5 +1,6 @@
 package freetime.porkyapi.farm.dao;
 
+import freetime.porkyapi.consts.SQLAssistant;
 import freetime.porkyapi.farm.model.FarmEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,12 +23,12 @@ public class FarmDAOImpl implements FarmDAO {
         List<Object> params = new ArrayList<>();
         if (farm != null) {
             if (farm.getFarmName() != null && !farm.getFarmName().isEmpty()) {
-                sql.append(" AND farmname = ?");
-                params.add(farm.getFarmName());
+                sql.append(" AND LOWER(farmname) LIKE LOWER(?)");
+                params.add(SQLAssistant.likeAll(farm.getFarmName()));
             }
             if (farm.getLocation() != null && !farm.getLocation().isEmpty()) {
-                sql.append(" AND location = ?");
-                params.add(farm.getLocation());
+                sql.append(" AND LOWER(location) LIKE LOWER(?)");
+                params.add(SQLAssistant.likeAll(farm.getLocation()));
             }
         }
 
